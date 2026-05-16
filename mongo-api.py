@@ -25,26 +25,29 @@ comentarios = db["comentarios"]
 def inicio():
     return {"estado": "API funcionando correctamente"}
 
-@app.get('/bares/{bar_id}/comentarios')
+@app.get('/api/bares/{bar_id}/comentarios')
 def get_comentarios(bar_id: int):
-    comentarios = list(comentarios.find({"bar_id":bar_id}, {"_id":0}))    
-    return comentarios
+    comentario = list(comentarios.find({"bar_id":bar_id}, {"_id":0}))    
+    return comentario
 
-@app.post('/bares/{bar_id}/comentarios')
+@app.post('/api/bares/{bar_id}/comentarios')
 def post_comentario(bar_id: int, datos: dict):
     datos['bar_id'] = bar_id
     datos['fecha']  = datetime.now().isoformat()
     comentarios.insert_one(datos)
     return {'mensaje': 'Comentario guardado'}
 
-@app.get('/bares/{bar_id}/eventos')
+@app.get('/api/bares/{bar_id}/eventos')
 def get_eventos(bar_id: int):
-    eventos = list(eventos.find({"bar_id": bar_id}, {"_id":0}))
-    return eventos
+    evento = list(eventos.find({"bar_id": bar_id}, {"_id":0}))
+    return evento
 
-@app.post('/bares/{bar_id}/eventos')
+@app.post('/api/bares/{bar_id}/eventos')
 def post_eventos(bar_id: int, datos: dict):
     datos['bar_id'] = bar_id
     datos['fecha_creacion'] = datetime.now().isoformat()
     eventos.insert_one(datos)
     return{'mensaje': 'Evento guardado'}
+
+
+#Algo para conectar con apex mas adelante: https://parranderos-api-x557.onrender.com
